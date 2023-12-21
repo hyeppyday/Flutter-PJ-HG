@@ -1,6 +1,59 @@
 void main(List<String> args) {
-  
-}
+
+  // Dog 클래스 메모리에 생성하기 /////////////////////////////////////////
+  // 클래스를 담는 변수의 형은 그 클래스명을 사용한다!
+  Dog d1 = Dog();
+  print('나의 강아지 종류는 ${d1.name}이다!');
+  // 클래스의 값 업데이트
+  d1.name = '시고르자브종';
+  print('1년후 나의 새로운 강아지 종류는 ${d1.name}이다!');
+  // 중요한 것은 클래스의 속성자체의 정의다!
+  // 값은 그것을 사용하는 사용자의 등록에 따라 달라질 수 있다!
+
+  print('내 강아지 색깔은 ${d1.color}이고 나이는 ${d1.age}살이다!');
+  print('훈련1회 실시 물기지수:${d1.traningDog()}%');
+  dynamic doit;
+  for(var i=0;i<10;i++){
+    doit = d1.traningDog();
+  }
+
+  print('훈련 10회 실시함! 물기지수:$doit%');
+
+  // 다른 변수에 Dog 클래스를 생성하여 사용!
+  // 기존 d1과 연결성은 없다!
+  // Dog d2 = new Dog(); -> new 키워드 생략가능
+  Dog d2 = Dog();
+  print('나의 사랑하는 강아지의 종류는 ${d2.name}이다!');
+
+  // 값을 생성시에 초기화하는 Cat 사용하기 ///////////////////////////////
+  Cat c1 = Cat("먼치킨", 4, "핑크브라운","고양이","펀치적","생선");
+  print('나의 고양이 종은 ${c1.name}이고 나이는 ${c1.age}살, 색깔은 ${c1.color}이다!');
+  // c1.name = '스핑크스'; -> final이면 재할당 불가!! 오류남
+  // print('나의 막내 고양이 종은 ${c1.name}이다');
+
+  // 상속받은 Cat 찍어보기
+  Cat c2 = Cat('페르시안고양이',13,'회색',"고양이","개인적","고등어");
+  print('내 고양이는 ${c2.name}이다. 나이는 ${c2.age}살이다. 배고플때 ${c2.hearSound(c2.species)}한다! 성격은 ${c2.character}이다.');
+
+
+
+
+
+
+
+
+  // 상수 테스트 : const, final //////////////////////////////////
+  const aa = "aa";
+  // const bb; -> 선언과 동시에 할당해야함!
+  final bb; // final은 선언 후 처음 할당되는것을 고정!! (상수화 함)
+  bb = 'bb';
+  // bb = 'bbb'; -> 재할당이 불가하다 ~!!
+  print('${aa} ${bb}');
+  // 선언과 할당 분리 특성에 따라 클래스에서 주로 사용됨 !!!
+  // -> 클래스는 const사용 자체가 불가함
+
+
+} ///////////////// main ////////////////////
 
 /************************************* 
 
@@ -13,31 +66,150 @@ void main(List<String> args) {
 
 형식 : class 키워드를 사용하여 파스칼케이스로 명명함
 class MyClassIsPerfect{
-  코드...
+  변수선언 및 할당
+  생성자함수(){}
+  메서드()
 }
+-> 변수는 선언만 할수도 있고 할당까지 할수있음!
+-> 생성자메서드는 클래스를 사용시 가장먼저 호출되는 메서드
+-> 개별적인 클래스 구성 메서드를 생성할 수 있음
+
+[ 다트의 클래스 상속 ]
+- 부모 클래스의 모든 속성과 메서드를 자식클래스에서
+사용코자 할때 기본공유를 하도록 하는 클래스장치
+- 상속 설정방법 : 
+  class 클래스명 extends 부모클래스명 {
+    구현코드...
+  }
+-> 만약 부모클래스 멤버필드가 초기화가 필요한 경우
+상속받은 클래스 생성시 반드시 부모클래스 생성자를 먼저 호출하기
+때문에 부모 클래스의 값을 먼저 초기화 셋팅해야 함!!!
+
+-> 부모클래스 초기화 방법 : 
+  클래스명 변수 = new 클래스명() -> new키워드 생략가능
+  클래스명 변수 = 클래스명(셋팅할 값보내기)
+
+  ->> 상속받은 자식 클래스 내부에서 생성자 초기화시
+  자식클래스명(this.초기화속성들) : super(부모속성초기화){}
+
+  ((다른방법)) -> 자식클래스 생성시 부모클래스 속성값도 보냄
+  자식클래스명(this.초기화속성들,새로운변수들) :
+  super(부모속성초기화를 해야할 새로운변수들){}
+
+
+  [ super 키워드란? ]
+
+  super 키워드는 부모클래스 자신을 가리킴
+
+  1. 사용상 super() 메서드로 쓰면 부모의 생성자임!
+  2. super.하위속성/메서드 접근할 수 있음
+  (편의상 super키워드 없이 바로 사용가능함!)
+
 *************************************/
 
-// 멍멍이 클래스
+// 반려동물 클래스 : 부모클래스 ///////////////////////
+class Pet {
+  // 반려동물 종류
+  final String species;
+  // 성격
+  final String character;
+  // 먹이종류
+  final String food;
+
+  // 인기지수
+  double likePet = 50.0;
+
+  // 생성자메서드
+  Pet(this.species,this.character,this.food) {
+    print('부모 Pet 클래스 생성자!');
+  }
+
+  String hearSound(String sp){
+    dynamic retVal;
+    switch(sp){
+      case '고양이':
+      retVal = "야옹";
+      break;
+
+      case '강아지':
+      retVal = "멍멍";
+      break;
+
+      case '프레리독':
+      retVal = "홉스캑";
+      break;
+
+      default :
+      retVal = '동물소리';
+      
+    } ///////// switch case /////////
+
+    // 리턴코드
+    return retVal;
+  } /////////// hearSound 메서드 ////////////
+
+} ////////// Pet 클래스 //////////////
+
+// 멍멍이 클래스 ///////////////////////////////////
 class Dog {
   // 클래스 속성들
   String name = "푸들";
   int age = 12;
   String color = "검정색";
-  int bite = 80;
+  int bite = 100;
 
   // 클래스 메서드
-  void traningDog(){
+  int traningDog(){
     bite = bite - 5;
+    // 5% ~ 100% 값 한계설정
+    if(bite<5) bite = 5;
+    else if(bite>100) bite = 100;
+
+    // 리턴값
+    return bite;
   }
 }
 
-// 야옹이 클래스
-class Cat {
+// 야옹이 클래스 /////////////////////////////////////
+class Cat extends Pet{
   // 클래스 속성들
-  String name = "페르시안 엑조틱";
-  int age = 8;
-  String color = "회색";
-  int punch = 80;
+  final String name;
+  // 고양이 년수
+  final int age;
+  // 고양이 색깔
+  final String color;
+  int punch=100;
+
+  // 속성들의 값 초기화는 생성하는 코드에서 해준다!
+  // 이것을 해주도록 설정하는 메서드는 무조건 실행되는
+  // 클래스의 필수 메서드인 생성자 메서드에 해준다!
+  // 생성자 메서드는 클래스와 이름이 같음!
+  // this키워드 : 클래스 내부 멤버(속성)을 지칭한다
+  // 생성자메서드(){} -> 소괄호안에 콤마로 초기값 셋팅함
+  // 중괄호를 생략할 수 있음(구현코드가 없다면...)
+  // -> 생성자메서드();
+
+  // 상속받은 부모 멤버필드 초기화는
+  // 이니셜라이즈(initialize) 키워드 콜론(:)을 사용하여
+  // 그 뒤에 super 키워드(부모클래스)로 값을 초기화 한다!
+  // super(초기화값들) -> 부모에 생성자 메서드와 동일!
+  
+  // Cat(this.name,this.age,this.color) : 
+  // super('고양이', '내성적', '생선'){ -> 직접 부모속성초기화!
+
+  // -> 생성시 부모속성까지 초기화하려면 변수로 대체함!
+  // species,character,food 세개의 값을 변수로 받아서 부모속성값을
+  // 처리하도록 함!
+  Cat(this.name,this.age,this.color, String species, String character, String food) : 
+  super(species, character, food){
+    
+    print('Cat 생성자함수 코드구역');
+    print('부모Pet클래스의 인기지수:${super.likePet}');
+    // super 키워드는 부모클래스 자신을 가리킴
+    // super.하위속성/메서드 접근할 수 있음
+    // 편의상 super키워드 없이 바로 사용가능함!
+
+  }
 
   // 클래스 메서드
   void traningCat(){
