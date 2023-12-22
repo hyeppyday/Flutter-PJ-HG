@@ -230,6 +230,7 @@ void testClass (){
   print(ks.eat());
   print(ks.say());
   print(ks.gender());
+  print('\n');
   // print(KyungSu().eat());
   // print(KyungSu().say());
 
