@@ -12,7 +12,7 @@ class RecipePage extends StatelessWidget {
   // 생성자 메서드에서 key를 받아서 부모속성을 셋팅함
   // key는 이미 만들어진 부모위젯에서 받는 기본값
   // 이 값은 우리가 넘겨주지 않아도 셋팅은 되어야함!
-  const RecipePage({Key? key}) : super(key:key);
+  const RecipePage({Key? key}) : super(key: key);
   // Key? key => key클래스 형 변수 key가 null이어도
   // 그 값을 null처리 하지 않고 "null"문자열로 처리해줌!
   // -> null safety라고 한다 !(물음표 사용!!)
@@ -22,24 +22,36 @@ class RecipePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // 가장 바깥쪽 레이아웃 Scaffold 위젯으로 시작!
     return Scaffold(
-      // 1. 전체 배경색 설정하기
-      backgroundColor: Color.fromARGB(255, 255, 201, 39),
-      // 2. App Bar 클래스 호출하기
-      appBar: _buildRecipeAppBar(),
-      // 3. body 구현하기
-      body: Column(
-        children: [
-          // 레시피 페이지 전체 타이틀
-        RecipeTitle(),
-      ],)
-    );
+        // 1. 전체 배경색 설정하기
+        backgroundColor: Color.fromARGB(255, 255, 201, 39),
+        // 2. App Bar 클래스 호출하기
+        appBar: _buildRecipeAppBar(),
+        // 3. body 구현하기
+        body: Padding(
+          // symmetric(horizontal:숫자,vertical:숫자)
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
+        // const EdgeInsets.symmetric(horizontal: 20),
+          // Column 위젯대신 ListView위젯을 사용해야 스크롤바 표시가 된다!
+          child: ListView(
+            children: [
+              // 1.레시피 페이지 전체 타이틀
+              RecipeTitle(),
+              // 2. 레시피 페이지 메뉴
+              RecipeMenu(),
+              // 3. 레시피 페이지 아이템
+              RecipeListItem('coffee', '커피 레시피'),
+              RecipeListItem('burger', '수제버거 레시피'),
+              RecipeListItem('pizza', '피자 레시피'),
+            ],
+          ),
+        ));
   }
 }
 
 // App Bar 클래스 만들기
 // 리턴형은 AppBar
 // 앱바 메서드의 이름은 주로 (언더바_로 시작한다!)
-AppBar _buildRecipeAppBar(){
+AppBar _buildRecipeAppBar() {
   return AppBar(
     // 앱바 배경색
     backgroundColor: Colors.white,
@@ -53,16 +65,20 @@ AppBar _buildRecipeAppBar(){
         // 주의 : 쿠퍼티노앱 상단 import 추가!!
         CupertinoIcons.search_circle_fill,
         color: Color.fromARGB(255, 255, 201, 39),
-
       ),
-      SizedBox(width: 10,),// 사이간격 박스
+      SizedBox(
+        width: 15,
+      ), // 사이간격 박스
       Icon(
         CupertinoIcons.heart_circle_fill,
-        color:Colors.red,
+        color: Colors.red,
       ),
+      SizedBox(
+        width: 15,
+      ), // 사이간격 박스
     ],
   );
-}
+} //////////// _buildRecipeAppBar //////////////
 // 앱바는 앱 최상단 구역을 차지하며
 // 구성요소로는 
 // 1. leading - 앱바 상단왼쪽 끝파트
