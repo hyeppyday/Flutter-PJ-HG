@@ -7,6 +7,10 @@ import 'package:app_03_profile/components/profile_header.dart';
 import 'package:app_03_profile/components/profile_drawer.dart';
 // 프로파일 카운트 정보 : 컨텐츠 카운트 정보
 import 'package:app_03_profile/components/Profile_count_info.dart';
+// 프로파일 버튼 불러오기
+import 'package:app_03_profile/components/Profile_buttons.dart';
+// 프로파일 탭 불러오기
+import 'package:app_03_profile/components/Profile_tab.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,11 +53,16 @@ class ProfilePage extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(height: 20,), // 위아래간격
-          // 프로파일 헤더파트 : 인물 사진 및 소개
+          // 1. 프로파일 헤더파트 : 인물 사진 및 소개
           ProfileHeader(),
           SizedBox(height: 20,), // 위아래간격
-          // 프로파일 카운트 정보 : 컨텐츠 카운트 정보
+          // 2. 프로파일 카운트 정보 : 컨텐츠 카운트 정보
           ProfileCount(),
+          SizedBox(height: 20,), // 위아래간격
+          // 3. 프로파일 버튼 
+          ProfileButtons(),
+          // 4. 프로파일 탭영역 : 끝부분까지 확장함! ->Expanded()사용!
+          Expanded(child: ProfileTab()),
         ],
       ),
     );
