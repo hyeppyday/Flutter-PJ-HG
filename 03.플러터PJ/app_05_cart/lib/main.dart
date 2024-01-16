@@ -36,7 +36,8 @@ class CartPage extends StatelessWidget {
       // 1.앱바
       appBar: _buildCartAppBar(),
       // 2.본문출력파트 바디
-      body: Column(
+      // body: Column(
+      body: ListView(
         children: [
           // 카트 페이지 상세구성 클래스 호출
           CartDetail(),
